@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Taiwan Study & Career Mentor | 外籍留臺與畢業生法規與職涯智能助手</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+body {
+font-family: 'Inter', 'Noto Sans TC', sans-serif;
+background-color: #F8FAFC;
+}
+@keyframes pulse-ring {
+0% { transform: scale(0.95); opacity: 0.8; }
+50% { transform: scale(1.08); opacity: 0.3; }
+100% { transform: scale(0.95); opacity: 0.8; }
+}
+.active-node-ring {
+animation: pulse-ring 1.4s infinite ease-in-out;
+}
+.tab-active {
+border-bottom: 3px solid #0D9488;
+color: #0F172A;
+font-weight: 700;
+}
+.tab-inactive {
+border-bottom: 3px solid transparent;
+color: #64748B;
+}
+.tab-inactive:hover {
+color: #0F172A;
+}
+</style>
+</head>
+<body class="text-slate-800 flex flex-col min-h-screen">
+
+<header class="bg-slate-900 text-white shadow-lg sticky top-0 z-40">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col md:flex-row md:items-center justify-between gap-3">
+<div class="flex items-center space-x-3">
+<div class="bg-teal-500 p-2.5 rounded-xl text-slate-900 shadow-md flex-shrink-0">
+<i data-lucide="graduation-cap" class="w-6 h-6"></i>
+</div>
+<div>
+<div class="flex items-center flex-wrap gap-2">
+<span class="font-bold text-base sm:text-lg tracking-tight text-white">AI Taiwan Study & Career Mentor</span>
+<span class="bg-teal-500/20 text-teal-300 text-[11px] font-semibold px-2.5 py-0.5 rounded-full border border-teal-500/40">Netlify Prototype</span>
+</div>
+<p class="text-xs text-slate-400 mt-0.5" data-i18n="appSubtitle">外籍留臺與畢業生跨越語言障礙、法規合規與職涯發展之 Generative AI 智能助手</p>
+</div>
+</div>
+
+<div class="bg-slate-800 p-1 rounded-lg flex items-center text-xs font-medium border border-slate-700 self-start md:self-auto">
+<button onclick="setLanguage('zh')" id="btn-lang-zh" class="px-2.5 py-1 rounded-md bg-teal-600 text-white transition">繁體中文</button>
+<button onclick="setLanguage('vi')" id="btn-lang-vi" class="px-2.5 py-1 rounded-md text-slate-300 hover:text-white transition">Tiếng Việt</button>
+<button onclick="setLanguage('en')" id="btn-lang-en" class="px-2.5 py-1 rounded-md text-slate-300 hover:text-white transition">English</button>
+</div>
+</div>
+
+<div class="bg-white border-b border-slate-200 text-slate-800">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex space-x-6 overflow-x-auto">
+<button onclick="switchTab('contract')" id="tab-btn-contract" class="tab-active py-3.5 text-xs sm:text-sm flex items-center space-x-2 whitespace-nowrap transition">
+<i data-lucide="file-search-2" class="w-4 h-4 text-teal-600"></i>
+<span data-i18n="tabContract">1. 合約與法規智能健檢</span>
+</button>
+<button onclick="switchTab('interview')" id="tab-btn-interview" class="tab-inactive py-3.5 text-xs sm:text-sm flex items-center space-x-2 whitespace-nowrap transition">
+<i data-lucide="mic" class="w-4 h-4 text-teal-600"></i>
+<span data-i18n="tabInterview">2. 求職面試與口語模擬</span>
+</button>
+</div>
+</div>
+</header>
+
+<main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+<!-- TAB 1 -->
+<div id="panel-contract" class="space-y-6">
+<section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+<div>
+<h2 class="text-sm sm:text-base font-bold text-slate-900 flex items-center space-x-2">
+<i data-lucide="git-merge" class="w-4 h-4 text-teal-600"></i>
+<span data-i18n="workflowTitle">AI 處理流程即時監控架構</span>
+</h2>
+<p class="text-xs text-slate-500 mt-0.5" data-i18n="workflowSub">結合 CO-STAR 提示工程、法規檢索與 Level-2 人工複審機制</p>
+</div>
+<div id="pipeline-status-badge" class="inline-flex items-center space-x-1.5 text-xs font-medium bg-slate-100 text-slate-700 px-3 py-1.5 rounded-full self-start sm:self-auto">
+<span class="w-2 h-2 rounded-full bg-teal-500"></span>
+<span data-i18n="statusReady">系統就緒：請輸入合約條文或任何問題</span>
+</div>
+</div>
+
+<div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2.5">
+<div id="node-0" class="pipeline-node bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-center transition-all">
+<div class="node-icon w-8 h-8 mx-auto rounded-full bg-slate-200 text-slate-600 flex items-center justify-center mb-1.5"><i data-lucide="file-input" class="w-4 h-4"></i></div>
+<div class="text-xs font-bold text-slate-800">1. 使用者輸入</div>
+<div class="text-[10px] text-slate-500 mt-0.5">文字 / 問題</div>
+</div>
+<div id="node-1" class="pipeline-node bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-center transition-all">
+<div class="node-icon w-8 h-8 mx-auto rounded-full bg-slate-200 text-slate-600 flex items-center justify-center mb-1.5"><i data-lucide="scan-text" class="w-4 h-4"></i></div>
+<div class="text-xs font-bold text-slate-800">2. 文字解析</div>
+<div class="text-[10px] text-slate-500 mt-0.5">語意與條款擷取</div>
+</div>
+<div id="node-2" class="pipeline-node bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-center transition-all">
+<div class="node-icon w-8 h-8 mx-auto rounded-full bg-slate-200 text-slate-600 flex items-center justify-center mb-1.5"><i data-lucide="database" class="w-4 h-4"></i></div>
+<div class="text-xs font-bold text-slate-800">3. 法規比對</div>
+<div class="text-[10px] text-slate-500 mt-0.5">勞動部 & 移民署</div>
+</div>
+<div id="node-3" class="pipeline-node bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-center transition-all">
+<div class="node-icon w-8 h-8 mx-auto rounded-full bg-slate-200 text-slate-600 flex items-center justify-center mb-1.5"><i data-lucide="cpu" class="w-4 h-4"></i></div>
+<div class="text-xs font-bold text-slate-800">4. 主模型分析</div>
+<div class="text-[10px] text-slate-500 mt-0.5">Gemini 推理</div>
+</div>
+<div id="node-4" class="pipeline-node bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-center transition-all">
+<div class="node-icon w-8 h-8 mx-auto rounded-full bg-slate-200 text-slate-600 flex items-center justify-center mb-1.5"><i data-lucide="git-compare" class="w-4 h-4"></i></div>
+<div class="text-xs font-bold text-slate-800">5. 邏輯審查</div>
+<div class="text-[10px] text-slate-500 mt-0.5">合規性核對</div>
+</div>
+<div id="node-5" class="pipeline-node bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-center transition-all">
+<div class="node-icon w-8 h-8 mx-auto rounded-full bg-slate-200 text-slate-600 flex items-center justify-center mb-1.5"><i data-lucide="user-check" class="w-4 h-4"></i></div>
+<div class="text-xs font-bold text-slate-800">6. 風險分級</div>
+<div class="text-[10px] text-slate-500 mt-0.5">低 / 中 / 高風險</div>
+</div>
+<div id="node-6" class="pipeline-node bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-center transition-all col-span-2 sm:col-span-1">
+<div class="node-icon w-8 h-8 mx-auto rounded-full bg-slate-200 text-slate-600 flex items-center justify-center mb-1.5"><i data-lucide="message-square-check" class="w-4 h-4"></i></div>
+<div class="text-xs font-bold text-slate-800">7. 結構化回饋</div>
+<div class="text-[10px] text-slate-500 mt-0.5">白話解析與建議</div>
+</div>
+</div>
+</section>
+
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<div class="lg:col-span-5 space-y-4">
+<div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 space-y-4">
+<h3 class="font-bold text-slate-900 text-sm flex items-center space-x-2">
+<span class="bg-teal-600 text-white w-5 h-5 rounded-full text-xs flex items-center justify-center">1</span>
+<span data-i18n="inputSectionTitle">輸入合約條文或法規問題</span>
+</h3>
+
+<div class="space-y-2">
+<div class="text-xs text-slate-500 font-medium" data-i18n="presetLabel">快速填入範例（也可直接修改或輸入任何新問題）：</div>
+<div class="grid grid-cols-1 gap-2">
+<button onclick="fillPreset('highRiskPartTime')" class="text-left p-2.5 rounded-xl border border-slate-200 hover:border-rose-400 hover:bg-rose-50/40 transition flex items-center justify-between">
+<div>
+<div class="text-xs font-bold text-slate-800" data-i18n="preset1Title">範例 A：外籍生工讀合約（超時與低薪）</div>
+<div class="text-[11px] text-slate-500" data-i18n="preset1Sub">點擊填入後可按分析</div>
+</div>
+<span class="text-[10px] font-bold bg-rose-100 text-rose-700 px-2 py-0.5 rounded">高風險</span>
+</button>
+<button onclick="fillPreset('mediumRiskPenalty')" class="text-left p-2.5 rounded-xl border border-slate-200 hover:border-amber-400 hover:bg-amber-50/40 transition flex items-center justify-between">
+<div>
+<div class="text-xs font-bold text-slate-800" data-i18n="preset2Title">範例 B：試用期不保勞健保與違約金</div>
+<div class="text-[11px] text-slate-500" data-i18n="preset2Sub">點擊填入後可按分析</div>
+</div>
+<span class="text-[10px] font-bold bg-amber-100 text-amber-700 px-2 py-0.5 rounded">中風險</span>
+</button>
+<button onclick="fillPreset('compliantStandard')" class="text-left p-2.5 rounded-xl border border-slate-200 hover:border-emerald-400 hover:bg-emerald-50/40 transition flex items-center justify-between">
+<div>
+<div class="text-xs font-bold text-slate-800" data-i18n="preset3Title">範例 C：合規標準聘僱條款</div>
+<div class="text-[11px] text-slate-500" data-i18n="preset3Sub">點擊填入後可按分析</div>
+</div>
+<span class="text-[10px] font-bold bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded">合規</span>
+</button>
+</div>
+</div>
+
+<div>
+<label class="block text-xs font-semibold text-slate-700 mb-1" data-i18n="textareaLabel">合約條文或自由提問：</label>
+<textarea id="contract-input" rows="5" class="w-full rounded-xl border border-slate-300 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 p-3 text-xs sm:text-sm text-slate-800 leading-relaxed" placeholder="請輸入任何問題（例如：外籍生寒暑假工時上限？評點制如何申請？）或貼上合約條文..."></textarea>
+</div>
+
+<button onclick="analyzeContractWithLiveAI()" id="btn-analyze" class="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-4 rounded-xl shadow-md hover:shadow-lg transition flex items-center justify-center space-x-2 text-sm">
+<i data-lucide="sparkles" class="w-4 h-4"></i>
+<span data-i18n="btnAnalyzeNow">啟動 AI 法規健檢與問答</span>
+</button>
+</div>
+</div>
+
+<div class="lg:col-span-7 space-y-4">
+<div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col h-full">
+<div id="result-banner" class="p-5 bg-slate-900 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+<div>
+<span class="text-xs font-bold uppercase tracking-wider text-teal-400">AI 結構化輸出</span>
+<h3 class="text-base font-bold mt-1" data-i18n="resultInitialHeading">法規比對與問題解析結果</h3>
+</div>
+<div id="risk-level-pill" class="px-3.5 py-1.5 rounded-full text-xs font-bold bg-slate-700 text-slate-200 self-start sm:self-auto">等待分析中</div>
+</div>
+
+<div id="hitl-alert-box" class="hidden bg-rose-50 border-b border-rose-200 p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+<div class="text-xs text-rose-900">
+<div class="font-bold">已觸發高風險提示（Human-in-the-Loop）</div>
+<p class="mt-0.5">涉及較高法規風險，建議轉交校園法務或駐點律師人工複審。</p>
+</div>
+<button onclick="escalateToHumanLawyer()" class="flex-shrink-0 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-3.5 py-2 rounded-lg transition">送交複審</button>
+</div>
+
+<div id="hitl-confirmed-box" class="hidden bg-indigo-50 border-b border-indigo-200 p-4 text-xs text-indigo-950">
+<strong>【人工複審提示】：</strong>建議先不要簽署有疑慮之條款，可向學校國際處/法務或勞動部 1955 專線進一步確認。
+</div>
+
+<div class="p-5 space-y-4 flex-grow">
+<div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5">
+<div class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">1. 重點解析 / 風險條款</div>
+<div id="out-risk-clause" class="text-xs sm:text-sm text-slate-800 leading-relaxed">請輸入問題或合約條文後點擊分析。</div>
+</div>
+
+<div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5">
+<div class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">2. 法律依據與參考規定</div>
+<div id="out-legal-basis" class="text-xs sm:text-sm text-slate-800 leading-relaxed">系統將自動比對相關法規與實務規定。</div>
+</div>
+
+<div class="bg-teal-50/50 border border-teal-200 rounded-xl p-3.5">
+<div class="text-xs font-bold text-teal-800 uppercase tracking-wider mb-1.5">3. 建議與行動指引</div>
+<div id="out-revision" class="text-xs sm:text-sm text-slate-800 leading-relaxed">AI 將依您的實際提問提供具體建議。</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- TAB 2 -->
+<div id="panel-interview" class="hidden space-y-6">
+<div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-6">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+<div>
+<span class="bg-teal-100 text-teal-800 text-xs font-bold px-2.5 py-0.5 rounded-full">Voice AI Module</span>
+<h2 class="text-lg font-bold text-slate-900 mt-1.5">台灣企業求職面試口語模擬器</h2>
+</div>
+<select id="interview-role-select" onchange="changeInterviewQuestion()" class="bg-slate-50 border border-slate-300 text-slate-800 text-xs font-semibold rounded-xl px-3 py-2">
+<option value="intern">情境 1：外籍實習生面試</option>
+<option value="fulltime">情境 2：畢業留臺正職與評點制</option>
+<option value="contract">情境 3：薪資與勞健保權益確認</option>
+</select>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<div class="bg-slate-900 text-white rounded-2xl p-5 space-y-3">
+<div class="flex items-center justify-between">
+<span class="text-xs font-bold text-teal-400">面試官提問</span>
+<button onclick="speakInterviewQuestion()" class="bg-teal-600 hover:bg-teal-500 text-white text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center space-x-1.5">
+<i data-lucide="volume-2" class="w-4 h-4"></i>
+<span>播放語音 (TTS)</span>
+</button>
+</div>
+<div class="bg-slate-800 border border-slate-700 rounded-xl p-4 text-sm leading-relaxed" id="hr-question-text">
+「同學你好，歡迎來面試！我們看到你是外籍留學生，請問你目前有申請工作證嗎？另外，開學期間你一週大概可以來公司實習幾天、幾個小時呢？」
+</div>
+</div>
+
+<div class="space-y-4">
+<div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-3">
+<div class="flex items-center justify-between">
+<span class="text-xs font-bold text-slate-700">您的回答：</span>
+<button onclick="toggleSpeechRecognition()" id="btn-stt-mic" class="bg-rose-100 hover:bg-rose-200 text-rose-700 text-xs font-bold px-3 py-1.5 rounded-lg flex items-center space-x-1.5">
+<i data-lucide="mic" class="w-3.5 h-3.5"></i>
+<span id="stt-btn-label">語音輸入 (STT)</span>
+</button>
+</div>
+<textarea id="interview-answer-input" rows="3" class="w-full rounded-xl border border-slate-300 p-3 text-xs sm:text-sm" placeholder="輸入或說出您的面試回答..."></textarea>
+<button onclick="evaluateInterviewAnswer()" id="btn-eval-interview" class="w-full bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold py-2.5 px-4 rounded-xl">
+AI 面試教練即時點評
+</button>
+</div>
+
+<div id="interview-feedback-box" class="hidden bg-teal-50/60 border border-teal-200 rounded-2xl p-4 text-xs sm:text-sm text-slate-800">
+<div id="interview-feedback-content" class="leading-relaxed"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+<div id="toast-box" class="fixed bottom-5 right-5 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl border border-slate-700 flex items-center space-x-3 transform translate-y-28 opacity-0 transition-all duration-300 z-50 max-w-sm">
+<div class="text-xs">
+<div class="font-bold text-white" id="toast-title">系統通知</div>
+<div class="text-slate-300 mt-0.5" id="toast-msg">訊息內容</div>
+</div>
+</div>
+
+<script>
+lucide.createIcons();
+
+let currentLang = 'zh';
+let recognition = null;
+let isRecording = false;
+
+const contractPresets = {
+highRiskPartTime: `第三條（薪資與工時約定）：\n乙方（外籍留學生）同意試用期間時薪以新台幣 165 元計算。學期期間每週工作時數為 28 小時，且無需等待勞動部工作許可核發即可先行上工；若未做滿三個月離職，需扣留一半薪資。`,
+mediumRiskPenalty: `第七條（試用期保險與最低服務年限）：\n1. 新進外籍畢業生試用期三個月內，暫不辦理勞工保險及全民健康保險。\n2. 乙方若未滿二年提前離職，應賠償甲方新台幣 10 萬元整。`,
+compliantStandard: `第四條（薪酬、保險與工時）：\n甲方聘僱乙方擔任軟體工程師，每月薪資為新台幣 48,000 元，自到職日起依法投保勞工保險、全民健康保險並提撥 6% 勞工退休金，每日正常工作 8 小時。`
+};
+
+const i18n = {
+zh: {
+appSubtitle: "外籍留臺與畢業生跨越語言障礙、法規合規與職涯發展之 Generative AI 智能助手",
+tabContract: "1. 合約與法規智能健檢",
+tabInterview: "2. 求職面試與口語模擬",
+workflowTitle: "AI 處理流程即時監控架構",
+workflowSub: "結合 CO-STAR 提示工程、法規檢索與 Level-2 人工複審機制",
+statusReady: "系統就緒：請輸入合約條文或任何問題",
+inputSectionTitle: "輸入合約條文或法規問題",
+presetLabel: "快速填入範例（也可直接修改或輸入任何新問題）：",
+preset1Title: "範例 A：外籍生工讀合約（超時與低薪）",
+preset1Sub: "點擊填入後可按分析",
+preset2Title: "範例 B：試用期不保勞健保與違約金",
+preset2Sub: "點擊填入後可按分析",
+preset3Title: "範例 C：合規標準聘僱條款",
+preset3Sub: "點擊填入後可按分析",
+textareaLabel: "合約條文或自由提問：",
+btnAnalyzeNow: "啟動 AI 法規健檢與問答",
+resultInitialHeading: "法規比對與問題解析結果"
+},
+vi: {
+appSubtitle: "Trợ lý AI hỗ trợ Du học sinh & Sinh viên tốt nghiệp tại Đài Loan về pháp luật và việc làm",
+tabContract: "1. Kiểm tra Hợp đồng & Pháp luật",
+tabInterview: "2. Mô phỏng Phỏng vấn Xin việc",
+workflowTitle: "Giám sát Quy trình Xử lý AI",
+workflowSub: "Kết hợp Prompt CO-STAR, đối chiếu quy định & thẩm định",
+statusReady: "Hệ thống sẵn sàng: Hãy nhập câu hỏi hoặc điều khoản hợp đồng",
+inputSectionTitle: "Nhập điều khoản hợp đồng hoặc câu hỏi",
+presetLabel: "Điền nhanh ví dụ (hoặc tự sửa / nhập câu hỏi mới):",
+preset1Title: "Ví dụ A: Hợp đồng làm thêm du học sinh",
+preset1Sub: "Bấm để điền vào ô nhập",
+preset2Title: "Ví dụ B: Không đóng bảo hiểm thử việc & phạt nghỉ việc",
+preset2Sub: "Bấm để điền vào ô nhập",
+preset3Title: "Ví dụ C: Điều khoản hợp lệ chuẩn",
+preset3Sub: "Bấm để điền vào ô nhập",
+textareaLabel: "Nội dung hợp đồng hoặc câu hỏi tự do:",
+btnAnalyzeNow: "Chạy Kiểm tra & Hỏi đáp AI",
+resultInitialHeading: "Kết quả Phân tích & Đối chiếu"
+},
+en: {
+appSubtitle: "Generative AI Mentor for International Students & Graduates in Taiwan",
+tabContract: "1. Contract & Legal Health Check",
+tabInterview: "2. Job Interview & Oral Simulator",
+workflowTitle: "Real-Time AI Processing Workflow",
+workflowSub: "CO-STAR Prompting, compliance check & review flow",
+statusReady: "System Ready: Paste contract text or ask any question",
+inputSectionTitle: "Input Contract Clause or Question",
+presetLabel: "Quick presets (or edit / type any custom question):",
+preset1Title: "Preset A: Student Part-Time Contract",
+preset1Sub: "Click to fill input box",
+preset2Title: "Preset B: Probation Insurance & Penalty",
+preset2Sub: "Click to fill input box",
+preset3Title: "Preset C: Standard Compliant Terms",
+preset3Sub: "Click to fill input box",
+textareaLabel: "Contract Clause or Free Question:",
+btnAnalyzeNow: "Run AI Legal Check & Q&A",
+resultInitialHeading: "Legal Comparison & Answer Output"
+}
+};
+
+function setLanguage(lang) {
+currentLang = lang;
+['zh', 'vi', 'en'].forEach(l => {
+const btn = document.getElementById(`btn-lang-${l}`);
+btn.className = (l === lang)
+? "px-2.5 py-1 rounded-md bg-teal-600 text-white transition"
+: "px-2.5 py-1 rounded-md text-slate-300 hover:text-white transition";
+});
+document.querySelectorAll('[data-i18n]').forEach(el => {
+const key = el.getAttribute('data-i18n');
+if (i18n[lang] && i18n[lang][key]) {
+el.textContent = i18n[lang][key];
+}
+});
+}
+
+function switchTab(tabName) {
+['contract', 'interview'].forEach(t => {
+document.getElementById(`panel-${t}`).classList.toggle('hidden', t !== tabName);
+document.getElementById(`tab-btn-${t}`).className = (t === tabName)
+? "tab-active py-3.5 text-xs sm:text-sm flex items-center space-x-2 whitespace-nowrap transition"
+: "tab-inactive py-3.5 text-xs sm:text-sm flex items-center space-x-2 whitespace-nowrap transition";
+});
+}
+
+function fillPreset(key) {
+document.getElementById('contract-input').value = contractPresets[key];
+showToast("已填入範例", "您可以直接按分析，或修改內容後再送出。");
+}
+
+function animateWorkflowNodes(onComplete) {
+const statusBadge = document.getElementById('pipeline-status-badge');
+statusBadge.className = "inline-flex items-center space-x-1.5 text-xs font-semibold bg-amber-100 text-amber-800 px-3 py-1.5 rounded-full";
+statusBadge.innerHTML = `<i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin"></i><span>正在呼叫後端 AI 分析...</span>`;
+lucide.createIcons();
+
+for (let i = 0; i < 7; i++) {
+const node = document.getElementById(`node-${i}`);
+const iconBox = node.querySelector('.node-icon');
+node.className = "pipeline-node bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-center transition-all opacity-50";
+iconBox.className = "node-icon w-8 h-8 mx-auto rounded-full bg-slate-200 text-slate-600 flex items-center justify-center mb-1.5";
+}
+
+let step = 0;
+const timer = setInterval(() => {
+if (step < 7) {
+const node = document.getElementById(`node-${step}`);
+const iconBox = node.querySelector('.node-icon');
+node.className = "pipeline-node bg-teal-50 border-2 border-teal-500 rounded-xl p-2.5 text-center transition-all shadow-sm";
+iconBox.className = "node-icon w-8 h-8 mx-auto rounded-full bg-teal-600 text-white flex items-center justify-center mb-1.5 active-node-ring";
+if (step > 0) {
+document.getElementById(`node-${step - 1}`).querySelector('.node-icon').classList.remove('active-node-ring');
+}
+step++;
+} else {
+clearInterval(timer);
+document.getElementById('node-6').querySelector('.node-icon').classList.remove('active-node-ring');
+if (onComplete) onComplete();
+}
+}, 120);
+}
+
+async function analyzeContractWithLiveAI() {
+const inputText = document.getElementById('contract-input').value.trim();
+if (!inputText) {
+showToast("請輸入內容", "請先輸入問題或貼上合約條文。");
+return;
+}
+
+const btn = document.getElementById('btn-analyze');
+const statusBadge = document.getElementById('pipeline-status-badge');
+btn.disabled = true;
+btn.classList.add('opacity-70');
+document.getElementById('hitl-alert-box').classList.add('hidden');
+document.getElementById('hitl-confirmed-box').classList.add('hidden');
+
+animateWorkflowNodes(async () => {
+try {
+const langInstruction = currentLang === 'vi'
+? "Hãy trả lời bằng tiếng Việt."
+: currentLang === 'en'
+? "Please respond in English."
+: "請以繁體中文回答，條理清晰、白話易懂。";
+
+const systemPrompt = `你是台灣勞動法、外籍生工讀與留臺工作法規專家助手。請直接針對使用者的實際提問或合約內容作答，不要套用固定模板。${langInstruction}`;
+
+const response = await fetch("/api/analyze", {
+method: "POST",
+headers: { "Content-Type": "application/json" },
+body: JSON.stringify({
+prompt: inputText,
+systemInstruction: systemPrompt,
+responseSchema: {
+type: "OBJECT",
+properties: {
+"風險條款": { type: "STRING" },
+"法律依據": { type: "STRING" },
+"風險等級": { type: "STRING", enum: ["低風險", "中風險", "高風險"] },
+"建議修訂內容": { type: "STRING" }
+},
+required: ["風險條款", "法律依據", "風險等級", "建議修訂內容"]
+}
+})
+});
+
+const result = await response.json();
+if (!response.ok) {
+throw new Error(result?.error || `HTTP ${response.status}`);
+}
+
+const jsonText = result.candidates?.[0]?.content?.parts?.[0]?.text;
+if (!jsonText) {
+throw new Error("模型未回傳有效內容");
+}
+
+const parsed = JSON.parse(jsonText);
+renderStructuredResult({
+riskLevel: parsed["風險等級"] || "中風險",
+riskClause: parsed["風險條款"] || "",
+legalBasis: parsed["法律依據"] || "",
+revision: parsed["建議修訂內容"] || ""
+});
+
+statusBadge.className = "inline-flex items-center space-x-1.5 text-xs font-semibold bg-emerald-100 text-emerald-800 px-3 py-1.5 rounded-full";
+statusBadge.innerHTML = `<i data-lucide="check-circle" class="w-3.5 h-3.5"></i><span>分析完成</span>`;
+lucide.createIcons();
+} catch (err) {
+statusBadge.className = "inline-flex items-center space-x-1.5 text-xs font-semibold bg-rose-100 text-rose-800 px-3 py-1.5 rounded-full";
+statusBadge.innerHTML = `<i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i><span>呼叫失敗</span>`;
+lucide.createIcons();
+showToast("呼叫失敗", err.message || "請檢查 Netlify 環境變數 GEMINI_API_KEY");
+renderStructuredResult({
+riskLevel: "中風險",
+riskClause: `無法取得 AI 回覆：${err.message || "未知錯誤"}`,
+legalBasis: "請確認 Netlify 是否已設定環境變數 GEMINI_API_KEY 並重新 Deploy。",
+revision: "設定完成後重新送出即可。"
+});
+} finally {
+btn.disabled = false;
+btn.classList.remove('opacity-70');
+}
+});
+}
+
+function renderStructuredResult(data) {
+const pill = document.getElementById('risk-level-pill');
+const banner = document.getElementById('result-banner');
+const hitlBox = document.getElementById('hitl-alert-box');
+
+if (data.riskLevel === "高風險") {
+pill.className = "px-3.5 py-1.5 rounded-full text-xs font-bold bg-rose-600 text-white shadow-sm";
+pill.textContent = "風險等級：高風險 (High Risk)";
+banner.className = "p-5 bg-rose-950 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3";
+hitlBox.classList.remove('hidden');
+} else if (data.riskLevel === "中風險") {
+pill.className = "px-3.5 py-1.5 rounded-full text-xs font-bold bg-amber-500 text-slate-950 shadow-sm";
+pill.textContent = "風險等級：中風險 (Medium Risk)";
+banner.className = "p-5 bg-slate-900 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3";
+hitlBox.classList.add('hidden');
+} else {
+pill.className = "px-3.5 py-1.5 rounded-full text-xs font-bold bg-emerald-500 text-slate-950 shadow-sm";
+pill.textContent = "風險等級：低風險 (Low Risk)";
+banner.className = "p-5 bg-slate-900 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3";
+hitlBox.classList.add('hidden');
+}
+
+document.getElementById('out-risk-clause').innerHTML = (data.riskClause || "").replace(/\n/g, '<br>');
+document.getElementById('out-legal-basis').innerHTML = (data.legalBasis || "").replace(/\n/g, '<br>');
+document.getElementById('out-revision').innerHTML = (data.revision || "").replace(/\n/g, '<br>');
+}
+
+function escalateToHumanLawyer() {
+document.getElementById('hitl-alert-box').classList.add('hidden');
+document.getElementById('hitl-confirmed-box').classList.remove('hidden');
+}
+
+const interviewQuestions = {
+intern: "「同學你好，歡迎來面試！我們看到你是外籍留學生，請問你目前有申請工作證嗎？另外，開學期間你一週大概可以來公司實習幾天、幾個小時呢？」",
+fulltime: "「你畢業後想留在台灣發展很棒！請問你對僑外生留臺工作評點制的申請流程了解嗎？預計什麼時候可以拿到勞動部的聘僱許可並正式報到？」",
+contract: "「我們決定錄取你了！關於薪資與保險的部分，試用期三個月我們都會依法幫你投保勞健保與提撥退休金，請問你對合約內容還有沒有其他疑問？」"
+};
+
+function changeInterviewQuestion() {
+const role = document.getElementById('interview-role-select').value;
+document.getElementById('hr-question-text').textContent = interviewQuestions[role];
+document.getElementById('interview-feedback-box').classList.add('hidden');
+}
+
+function speakInterviewQuestion() {
+const text = document.getElementById('hr-question-text').textContent;
+if ('speechSynthesis' in window) {
+window.speechSynthesis.cancel();
+const utterance = new SpeechSynthesisUtterance(text);
+utterance.lang = 'zh-TW';
+window.speechSynthesis.speak(utterance);
+}
+}
+
+function toggleSpeechRecognition() {
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+if (!SpeechRecognition) {
+showToast("瀏覽器提示", "目前瀏覽器不支援即時麥克風 STT，請直接打字。");
+return;
+}
+if (isRecording && recognition) {
+recognition.stop();
+isRecording = false;
+document.getElementById('stt-btn-label').textContent = "語音輸入 (STT)";
+return;
+}
+recognition = new SpeechRecognition();
+recognition.lang = 'zh-TW';
+recognition.interimResults = false;
+recognition.onstart = () => {
+isRecording = true;
+document.getElementById('stt-btn-label').textContent = "聆聽中...";
+};
+recognition.onresult = (event) => {
+document.getElementById('interview-answer-input').value = event.results[0][0].transcript;
+};
+recognition.onend = () => {
+isRecording = false;
+document.getElementById('stt-btn-label').textContent = "語音輸入 (STT)";
+};
+recognition.start();
+}
+
+async function evaluateInterviewAnswer() {
+const question = document.getElementById('hr-question-text').textContent;
+const answer = document.getElementById('interview-answer-input').value.trim();
+if (!answer) {
+showToast("請輸入回答", "請先輸入或說出您的面試回答。");
+return;
+}
+
+const btn = document.getElementById('btn-eval-interview');
+btn.disabled = true;
+const box = document.getElementById('interview-feedback-box');
+const content = document.getElementById('interview-feedback-content');
+box.classList.remove('hidden');
+content.innerHTML = "AI 面試教練正在點評中...";
+
+try {
+const prompt = `你是協助外籍生在台灣求職的 AI 面試教練。\n面試官問題：${question}\n學生回答：${answer}\n請用繁體中文簡潔給出 3 點點評：1. 語氣得體度；2. 法規認知；3. 高分回答範例。`;
+const response = await fetch("/api/analyze", {
+method: "POST",
+headers: { "Content-Type": "application/json" },
+body: JSON.stringify({ prompt })
+});
+const result = await response.json();
+if (!response.ok) throw new Error(result?.error || `HTTP ${response.status}`);
+const reply = result.candidates?.[0]?.content?.parts?.[0]?.text || "未取得回覆";
+content.innerHTML = reply.replace(/\n/g, '<br>');
+} catch (e) {
+content.innerHTML = `點評失敗：${e.message || "未知錯誤"}`;
+} finally {
+btn.disabled = false;
+}
+}
+
+function showToast(title, msg) {
+const toast = document.getElementById('toast-box');
+document.getElementById('toast-title').textContent = title;
+document.getElementById('toast-msg').textContent = msg;
+toast.classList.remove('translate-y-28', 'opacity-0');
+setTimeout(() => {
+toast.classList.add('translate-y-28', 'opacity-0');
+}, 4000);
+}
+
+window.onload = function () {
+for (let i = 0; i < 7; i++) {
+const node = document.getElementById(`node-${i}`);
+const iconBox = node.querySelector('.node-icon');
+node.className = "pipeline-node bg-teal-50/70 border border-teal-400 rounded-xl p-2.5 text-center transition-all";
+iconBox.className = "node-icon w-8 h-8 mx-auto rounded-full bg-teal-600 text-white flex items-center justify-center mb-1.5";
+}
+};
+</script>
+</body>
+</html>
+
